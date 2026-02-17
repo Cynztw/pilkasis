@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilkasis Icon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #764ba2;
+            text-align: center;
+        }
+        .instructions {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #764ba2;
+        }
+        button {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            display: block;
+        }
+        .download-area {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        .size-list {
+            list-style: none;
+            padding: 0;
+        }
+        .size-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Pilkasis PWA Icon Generator</h1>
+        
+        <div class="instructions">
+            <strong>Instruksi:</strong>
+            <p>Klik tombol di bawah untuk menggenerate icon dalam berbagai ukuran untuk PWA Pilkasis.</p>
+            <p>File akan otomatis didownload dalam format PNG. Simpan di folder <code>public/icons/</code></p>
+        </div>
+
+        <h3>Generate Icons</h3>
+        <div>
+            <button onclick="generateAndDownloadIcon(192)">Download Icon 192x192</button>
+            <button onclick="generateAndDownloadIcon(512)">Download Icon 512x512</button>
+            <button onclick="generateAndDownloadIcon(192, true)">Download Maskable Icon 192x192</button>
+            <button onclick="generateAndDownloadIcon(512, true)">Download Maskable Icon 512x512</button>
+        </div>
+
+        <h3>Generate Splash Screens</h3>
+        <div>
+            <button onclick="generateSplash(640, 1136)">iPhone 5 Splash (640x1136)</button>
+            <button onclick="generateSplash(750, 1334)">iPhone 6/7/8 Splash (750x1334)</button>
+            <button onclick="generateSplash(1242, 2208)">iPhone XR Splash (1242x2208)</button>
+        </div>
+
+        <h3>Ukuran Yang Akan Dihasilkan</h3>
+        <ul class="size-list">
+            <li>
+                <span>icon-192.png</span>
+                <span>192x192 (General icon)</span>
+            </li>
+            <li>
+                <span>icon-512.png</span>
+                <span>512x512 (Splash & manifest)</span>
+            </li>
+            <li>
+                <span>icon-maskable-192.png</span>
+                <span>192x192 (Adaptive icon)</span>
+            </li>
+            <li>
+                <span>icon-maskable-512.png</span>
+                <span>512x512 (Adaptive icon)</span>
+            </li>
+            <li>
+                <span>splash-640x1136.png</span>
+                <span>Splash screen iPhone 5</span>
+            </li>
+            <li>
+                <span>splash-750x1334.png</span>
+                <span>Splash screen iPhone 6/7/8</span>
+            </li>
+            <li>
+                <span>splash-1242x2208.png</span>
+                <span>Splash screen iPhone XR</span>
+            </li>
+        </ul>
+
+        <div class="instructions" style="margin-top: 30px;">
+            <strong>✅ Setelah download selesai:</strong>
+            <ol>
+                <li>Buat folder <code>public/icons/</code> jika belum ada</li>
+                <li>Pindahkan semua file PNG ke folder tersebut</li>
+                <li>Refresh aplikasi di browser</li>
+                <li>Cek di F12 → Application → Manifest untuk verifikasi</li>
+            </ol>
+        </div>
+
+        <canvas id="canvas" style="display:none;"></canvas>
+    </div>
+
+    <script>
+        function createGradient(canvas, x1, y1, x2, y2) {
+            const ctx = canvas.getContext('2d');
+            const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            return gradient;
+        }
+
+        function drawIcon(canvas, size, maskable = false) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = size;
+            canvas.height = size;
+
+            // Background
+            const gradient = createGradient(canvas, 0, 0, size, size);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+
+            // Safe area untuk maskable icons
+            if (maskable) {
+                const padding = size * 0.1;
+                // Circular mask area
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.beginPath();
+                ctx.arc(size / 2, size / 2, (size / 2) - padding, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Draw checkmark icon
+            const checkSize = size * 0.4;
+            const checkX = size / 2;
+            const checkY = size / 2;
+
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = checkSize * 0.2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            // Draw checkmark
+            ctx.beginPath();
+            ctx.moveTo(checkX - checkSize * 0.3, checkY);
+            ctx.lineTo(checkX - checkSize * 0.1, checkY + checkSize * 0.2);
+            ctx.lineTo(checkX + checkSize * 0.3, checkY - checkSize * 0.2);
+            ctx.stroke();
+
+            // Draw square around
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = checkSize * 0.15;
+            const boxSize = checkSize * 0.8;
+            ctx.strokeRect(checkX - boxSize / 2, checkY - boxSize / 2, boxSize, boxSize);
+
+            // Text "PILKASIS"
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold ' + (size * 0.15) + 'px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText('PILKASIS', size / 2, size * 0.65);
+        }
+
+        function drawSplash(canvas, width, height) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = width;
+            canvas.height = height;
+
+            // Background gradient
+            const gradient = createGradient(canvas, 0, 0, width, height);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            // Draw app icon
+            const iconSize = Math.min(width, height) * 0.3;
+            const iconX = width / 2 - iconSize / 2;
+            const iconY = height / 2 - iconSize / 2 - (height * 0.1);
+
+            // Icon background circle
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.beginPath();
+            ctx.arc(width / 2, iconY + iconSize / 2, iconSize / 2 + 10, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw checkmark in splash
+            const checkSize = iconSize * 0.4;
+            const checkX = width / 2;
+            const checkY = iconY + iconSize / 2;
+
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = checkSize * 0.15;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            ctx.beginPath();
+            ctx.moveTo(checkX - checkSize * 0.3, checkY);
+            ctx.lineTo(checkX - checkSize * 0.1, checkY + checkSize * 0.2);
+            ctx.lineTo(checkX + checkSize * 0.3, checkY - checkSize * 0.2);
+            ctx.stroke();
+
+            // Draw square
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = checkSize * 0.12;
+            const boxSize = checkSize * 0.8;
+            ctx.strokeRect(checkX - boxSize / 2, checkY - boxSize / 2, boxSize, boxSize);
+
+            // Text
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold ' + (height * 0.08) + 'px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText('PILKASIS', width / 2, height * 0.65);
+
+            ctx.font = (height * 0.04) + 'px Arial';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillText('Pemilihan Ketua OSIS', width / 2, height * 0.75);
+        }
+
+        function downloadCanvas(canvas, filename) {
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }, 'image/png', 0.95);
+        }
+
+        function generateAndDownloadIcon(size, maskable = false) {
+            const canvas = document.getElementById('canvas');
+            drawIcon(canvas, size, maskable);
+            
+            const filename = maskable 
+                ? `icon-maskable-${size}.png`
+                : `icon-${size}.png`;
+            
+            downloadCanvas(canvas, filename);
+            alert(`✅ ${filename} berhasil didownload!\n\nSimpan ke folder: public/icons/`);
+        }
+
+        function generateSplash(width, height) {
+            const canvas = document.getElementById('canvas');
+            drawSplash(canvas, width, height);
+            
+            const filename = `splash-${width}x${height}.png`;
+            downloadCanvas(canvas, filename);
+            alert(`✅ ${filename} berhasil didownload!\n\nSimpan ke folder: public/icons/`);
+        }
+    </script>
+</body>
+</html>

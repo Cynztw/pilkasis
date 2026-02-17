@@ -1,0 +1,15 @@
+/.idea/
+/.vscode/
+vendor/
+node_modules/
+.env
+.env.*
+.DS_Store
+Thumbs.db
+*.log
+composer.lock
+/.cache/
+/uploads/
+/public/uploads/
+*.sql
+/.sass-cache/

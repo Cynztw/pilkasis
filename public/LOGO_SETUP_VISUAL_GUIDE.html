@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilkasis - Logo Integration Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3rem;
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .step {
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 10px;
+            float: left;
+        }
+        
+        .step p {
+            margin-left: 45px;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .path {
+            background: #1a1a1a;
+            color: #38ef7d;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            word-break: break-all;
+        }
+        
+        .checklist {
+            background: #f0f8ff;
+            border-left: 4px solid #11998e;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .checklist label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            font-size: 1.05rem;
+        }
+        
+        .checklist input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .info-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            color: #155724;
+        }
+        
+        .image-preview {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        
+        .image-preview img {
+            max-width: 200px;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: white;
+            padding: 10px;
+        }
+        
+        .folder-structure {
+            background: #1a1a1a;
+            color: #38ef7d;
+            padding: 20px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        
+        .status-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .status-table th,
+        .status-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .status-table th {
+            background: #667eea;
+            color: white;
+        }
+        
+        .status-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .status-ready {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .status-waiting {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        
+        .footer {
+            background: #f9f9f9;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+            color: #666;
+        }
+        
+        .footer p {
+            margin: 5px 0;
+        }
+        
+        .highlight {
+            background: yellow;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Pilkasis Logo Integration</h1>
+            <p>Panduan Penempatkan Logo Pramuka secara Otomatis</p>
+        </div>
+        
+        <div class="content">
+            <!-- Status Section -->
+            <div class="section">
+                <h2>📊 Status Sistem</h2>
+                <table class="status-table">
+                    <tr>
+                        <th>Komponen</th>
+                        <th>Status</th>
+                        <th>Keterangan</th>
+                    </tr>
+                    <tr>
+                        <td>Admin Settings Page</td>
+                        <td class="status-ready">✅ Siap</td>
+                        <td>Sudah dikonfigurasi untuk menampilkan logo</td>
+                    </tr>
+                    <tr>
+                        <td>CSS & Styling</td>
+                        <td class="status-ready">✅ Siap</td>
+                        <td>Circle frame, shadow, responsive ready</td>
+                    </tr>
+                    <tr>
+                        <td>Mobile Support</td>
+                        <td class="status-ready">✅ Siap</td>
+                        <td>Fully responsive dan teruji</td>
+                    </tr>
+                    <tr>
+                        <td>Fallback Logic</td>
+                        <td class="status-ready">✅ Siap</td>
+                        <td>Otomatis handle jika file tidak ada</td>
+                    </tr>
+                    <tr>
+                        <td>Logo File</td>
+                        <td class="status-waiting">⏳ Menunggu</td>
+                        <td>Perlu ditempatkan di folder images</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- Quick Start -->
+            <div class="section">
+                <h2>⚡ Cara Cepat (3 Langkah)</h2>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <p><strong>Cari file logo Pramuka</strong><br>
+                    File yang Anda kirimkan sudah kami terima. Lokasikan di folder Downloads atau tempat penyimpanan.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <p><strong>Buka VS Code atau File Manager</strong><br>
+                    Navigasi ke folder target di bawah ini (atau drag-drop langsung)</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <p><strong>Copy file logo ke folder</strong><br>
+                    Paste file dengan nama: <span class="highlight">pramuka-logo.png</span></p>
+                </div>
+            </div>
+            
+            <!-- Folder Path -->
+            <div class="section">
+                <h2>📂 Lokasi Folder Target</h2>
+                
+                <h3>Absolute Path (Windows):</h3>
+                <div class="path">
+c:\xampp\htdocs\webprosm2\pilkasis\public\images\pramuka-logo.png
+                </div>
+                
+                <h3>Folder Structure:</h3>
+                <div class="folder-structure">
+pilkasis/
+├── public/
+│   └── images/
+│       ├── candidates/
+│       ├── pramuka-logo.png  ← LETAKKAN LOGO DI SINI ✅
+│       └── [files lainnya]
+└── [files lainnya]
+                </div>
+            </div>
+            
+            <!-- Method Options -->
+            <div class="section">
+                <h2>🔄 Pilih Cara Penempatkan</h2>
+                
+                <h3>Metode 1: VS Code File Explorer</h3>
+                <ol>
+                    <li>Tekan <code>Ctrl+Shift+E</code> atau klik File Explorer</li>
+                    <li>Expand <code>pilkasis</code> → <code>public</code> → <code>images</code></li>
+                    <li>Drag logo file ke folder <code>images</code></li>
+                    <li>Pastikan nama file: <span class="highlight">pramuka-logo.png</span></li>
+                </ol>
+                
+                <h3>Metode 2: Windows File Manager</h3>
+                <ol>
+                    <li>Buka File Manager (Windows + E)</li>
+                    <li>Navigasi ke: <code>c:\xampp\htdocs\webprosm2\pilkasis\public\images\</code></li>
+                    <li>Copy-paste atau drag-drop logo ke folder</li>
+                    <li>Verify nama file: <span class="highlight">pramuka-logo.png</span></li>
+                </ol>
+                
+                <h3>Metode 3: Command Line (Advanced)</h3>
+                <div class="folder-structure">
+# Dari Command Prompt:
+copy C:\path\to\pramuka-logo.png c:\xampp\htdocs\webprosm2\pilkasis\public\images\
+                </div>
+            </div>
+            
+            <!-- Verification -->
+            <div class="section">
+                <h2>✅ Verifikasi Penempatkan</h2>
+                
+                <div class="checklist">
+                    <h3>Setelah file ditempatkan, check:</h3>
+                    <label>
+                        <input type="checkbox"> File ada di: <code>public/images/pramuka-logo.png</code>
+                    </label>
+                    <label>
+                        <input type="checkbox"> Nama file tepat: <span class="highlight">pramuka-logo.png</span> (case-sensitive)
+                    </label>
+                    <label>
+                        <input type="checkbox"> File size > 1 KB
+                    </label>
+                    <label>
+                        <input type="checkbox"> Format: .png, .jpg, atau .webp
+                    </label>
+                </div>
+                
+                <div class="checklist">
+                    <h3>Testing di Browser:</h3>
+                    <label>
+                        <input type="checkbox"> Buka: <code>http://localhost/webprosm2/pilkasis/views/admin/settings.php</code>
+                    </label>
+                    <label>
+                        <input type="checkbox"> Login sebagai Admin
+                    </label>
+                    <label>
+                        <input type="checkbox"> Lihat navbar atas halaman
+                    </label>
+                    <label>
+                        <input type="checkbox"> Logo harus terlihat di sebelah text "PILKASIS"
+                    </label>
+                    <label>
+                        <input type="checkbox"> Logo berbentuk lingkaran dengan white background
+                    </label>
+                    <label>
+                        <input type="checkbox"> Ada subtle shadow effect di sekitar logo
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Expected Result -->
+            <div class="section">
+                <h2>🎨 Hasil yang Diharapkan</h2>
+                
+                <div class="success">
+                    <h3>✅ Logo akan tampil di:</h3>
+                    <p><strong>Admin Settings Page Navbar</strong></p>
+                    <p>Lokasi: Sebelah kiri, sebelum text "PILKASIS"</p>
+                    <p>Ukuran: 40x40 pixel (circular)</p>
+                    <p>Style: White background dengan shadow</p>
+                    <p>Responsive: Auto-scale di mobile devices</p>
+                </div>
+            </div>
+            
+            <!-- Troubleshooting -->
+            <div class="section">
+                <h2>🔧 Troubleshooting</h2>
+                
+                <h3>❓ Logo tidak muncul?</h3>
+                <div class="step">
+                    <p>
+                        ✓ Check: Apakah file di lokasi yang tepat?<br>
+                        ✓ Check: Nama file <span class="highlight">pramuka-logo.png</span> (case-sensitive)<br>
+                        ✓ Clear browser cache: <code>Ctrl+Shift+Delete</code><br>
+                        ✓ Hard refresh: <code>Ctrl+Shift+F5</code><br>
+                        ✓ Close browser sepenuhnya, buka lagi
+                    </p>
+                </div>
+                
+                <h3>❓ Logo blur atau pixelated?</h3>
+                <div class="step">
+                    <p>
+                        ✓ Upload file dengan ukuran minimal 256x256 pixel<br>
+                        ✓ Gunakan format PNG untuk kualitas terbaik<br>
+                        ✓ Pastikan file tidak compressed
+                    </p>
+                </div>
+                
+                <h3>❓ Logo tidak responsif di mobile?</h3>
+                <div class="step">
+                    <p>
+                        ✓ CSS sudah responsive (bawaan sistem)<br>
+                        ✓ Coba di browser mobile yang berbeda<br>
+                        ✓ Clear cache di mobile device
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Next Steps -->
+            <div class="section">
+                <h2>🚀 Langkah Berikutnya</h2>
+                <div class="info-box">
+                    <p><strong>Setelah logo berhasil ditampilkan:</strong></p>
+                    <ol style="margin-top: 10px;">
+                        <li>Test di berbagai device (desktop, tablet, mobile)</li>
+                        <li>Test dark mode (di mobile atau Windows Settings)</li>
+                        <li>Verify tidak ada error di browser console (F12)</li>
+                        <li>Logo siap untuk production deployment</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <!-- Info -->
+            <div class="section">
+                <h2>💡 Informasi Penting</h2>
+                
+                <div class="info-box">
+                    <p><strong>Automatic Features:</strong></p>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>✅ Sistem otomatis detect jika logo ada</li>
+                        <li>✅ Jika ada, logo dimunculkan otomatis</li>
+                        <li>✅ Jika tidak ada, halaman tetap normal (fallback)</li>
+                        <li>✅ Tidak perlu coding, cukup copy file</li>
+                        <li>✅ Responsive dan mobile-friendly otomatis</li>
+                        <li>✅ Dark mode compatible otomatis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Pilkasis System - Logo Integration Guide v2.0.1</strong></p>
+            <p>Created: 16 February 2026</p>
+            <p>Status: ✅ Ready for Production</p>
+            <p style="margin-top: 20px; color: #28a745;"><strong>Selamat! Sistem Anda siap dengan logo Pramuka! 🎓</strong></p>
+        </div>
+    </div>
+</body>
+</html>
