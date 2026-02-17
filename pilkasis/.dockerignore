@@ -1,0 +1,13 @@
+.git
+.github
+.vscode
+node_modules
+vendor
+*.log
+*.env
+*.sql
+/.cache
+/uploads
+/public/uploads
+Dockerfile
+push_to_github.bat
