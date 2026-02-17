@@ -1,0 +1,81 @@
+{
+  "name": "Pilkasis - Sistem Pemilihan Ketua OSIS",
+  "short_name": "Pilkasis",
+  "description": "Aplikasi sistem pemilihan ketua OSIS berbasis web dengan fitur voting real-time",
+  "start_url": "/webprosm2/pilkasis/index.php",
+  "scope": "/webprosm2/pilkasis/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#764ba2",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/webprosm2/pilkasis/public/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/webprosm2/pilkasis/public/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/webprosm2/pilkasis/public/icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/webprosm2/pilkasis/public/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "screenshots": [
+    {
+      "src": "/webprosm2/pilkasis/public/icons/screenshot-1.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/webprosm2/pilkasis/public/icons/screenshot-2.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Mulai Voting",
+      "short_name": "Voting",
+      "description": "Langsung ke halaman voting",
+      "url": "/webprosm2/pilkasis/index.php",
+      "icons": [
+        {
+          "src": "/webprosm2/pilkasis/public/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Dashboard Admin",
+      "short_name": "Admin",
+      "description": "Kelola pemilihan OSIS",
+      "url": "/webprosm2/pilkasis/views/admin/dashboard.php",
+      "icons": [
+        {
+          "src": "/webprosm2/pilkasis/public/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}
